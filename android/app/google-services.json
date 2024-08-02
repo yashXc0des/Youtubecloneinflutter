@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "731320901071",
+    "project_id": "youtubeclonenow2",
+    "storage_bucket": "youtubeclonenow2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:731320901071:android:5c9965aba538051d8846ba",
+        "android_client_info": {
+          "package_name": "com.example.youtubeclonenow2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjMctAlvJlqbfhdNWI00VM5p45tZqn8WU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
