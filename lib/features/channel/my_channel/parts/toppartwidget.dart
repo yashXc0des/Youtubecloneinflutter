@@ -1,32 +1,32 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../auth/model/user_model.dart';
 class Toppart extends StatelessWidget {
-  const Toppart({super.key});
+  final UserModel user;
+  const Toppart({super.key, required this.user});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const Center(
-          child: CircleAvatar(
-            radius: 38,
-            backgroundColor: Colors.green,
-          ),
+        CircleAvatar(
+          radius: 38,
+          backgroundColor: Colors.green,
+          backgroundImage: CachedNetworkImageProvider(user.profilePic),
         ),
-        const Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Text("Ahmad Amini",style: TextStyle(
-              fontSize: 27,
-              fontWeight: FontWeight.bold
-          ),),
-        ),
+        Text(user.displayName,style: const TextStyle(
+            fontSize: 27,
+            fontWeight: FontWeight.bold
+        ),),
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: RichText(text: const TextSpan(
-              style:TextStyle(color: Colors.blueGrey),
+          child: RichText(text:  TextSpan(
+              style:const TextStyle(color: Colors.blueGrey),
               children: [
-                TextSpan(text: "Admad Amini "),
-                TextSpan(text: "No subscription "),
-                TextSpan(text: "No videos")
+                TextSpan(text: "${user.username} "),
+                TextSpan(text: "${user.subscription.length} Subscription "),
+                TextSpan(text: "${user.videos} Videos")
               ])),
         ),
       ],
