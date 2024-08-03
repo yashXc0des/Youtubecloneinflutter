@@ -1,9 +1,9 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
 class SettingsDialog extends StatefulWidget {
   final String identifier;
-  final Function(String channelName)? onSave;
+  final Function(String)? onSave;
+
   const SettingsDialog({
     Key? key,
     required this.identifier,
@@ -15,7 +15,8 @@ class SettingsDialog extends StatefulWidget {
 }
 
 class _SettingsDialogState extends State<SettingsDialog> {
-  final controller = TextEditingController();
+  final TextEditingController controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -45,14 +46,22 @@ class _SettingsDialogState extends State<SettingsDialog> {
       ),
       actions: [
         TextButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).pop();
+            // Dismiss dialog on cancel
+          },
           child: const Text(
             "CANCEL",
             style: TextStyle(color: Colors.black),
           ),
         ),
         TextButton(
-          onPressed: () {},
+          onPressed: () {
+            if (widget.onSave != null) {
+              widget.onSave!(controller.text); // Call onSave with the entered text
+            }
+            Navigator.of(context).pop(); // Dismiss dialog after saving
+          },
           child: const Text(
             "SAVE",
             style: TextStyle(color: Colors.black),

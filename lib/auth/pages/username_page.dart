@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:youtubeclonenow2/cores/widgets/flat_button.dart';
 
+import '../provider/user_provider.dart';
 import '../repository/user_data_service.dart';
 
 final formkey = GlobalKey<FormState>();

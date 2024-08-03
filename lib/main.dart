@@ -7,6 +7,7 @@ import 'package:youtubeclonenow2/cores/firebase_options.dart';
 
 import 'auth/pages/login_page.dart';
 import 'auth/pages/username_page.dart';
+import 'features/channel/my_channel/pages/channel_settings.dart';
 import 'features/channel/my_channel/pages/my_channel_screen.dart';
 import 'home_page.dart';
 
@@ -66,7 +67,7 @@ class AuthWidget extends ConsumerWidget {
                   email: user.email ?? '',
                 );
               } else {
-                return MyChannelScreen();
+                return ChannelSettings();
               }
             },
           );

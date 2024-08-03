@@ -1,12 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:youtubeclonenow2/auth/model/user_model.dart';
 
-final userDataServiceProvider =Provider((ref)=>UserDataService(
-  firestore: FirebaseFirestore.instance,
-  auth:FirebaseAuth.instance,)
-  );
 class UserDataService {
   final FirebaseAuth auth;
   final FirebaseFirestore firestore;
@@ -42,9 +37,18 @@ class UserDataService {
       print('Error adding user data to Firestore: $e');
     }
   }
+
   Future<UserModel> fetchCurrentUserData() async {
-    final currentUserMap= await firestore.collection("users").doc(auth.currentUser!.uid).get();
-    UserModel user=UserModel.fromMap(currentUserMap.data()!);
-    return user;
+    final currentUserMap = await firestore.collection("users").doc(auth.currentUser!.uid).get();
+    return UserModel.fromMap(currentUserMap.data()!);
+  }
+
+  Stream<UserModel> userStream() {
+    return firestore.collection('users').doc(auth.currentUser!.uid).snapshots().map((snapshot) {
+      if (!snapshot.exists) {
+        throw Exception("User not found");
+      }
+      return UserModel.fromMap(snapshot.data()!);
+    });
   }
 }
