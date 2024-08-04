@@ -9,7 +9,7 @@ import 'package:youtubeclonenow2/cores/screens/loader.dart';
 import 'package:youtubeclonenow2/features/channel/widgets/edit_setting_dialog.dart';
 import '../../../../cores/screens/error_page.dart';
 import '../../widgets/setting_field_item.dart';
-import '../edit_fields.dart';
+import '../repository/edit_fields.dart';
 import 'dart:io';
 
 class ChannelSettings extends ConsumerStatefulWidget {
