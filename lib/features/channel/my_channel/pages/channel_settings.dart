@@ -8,6 +8,7 @@ import 'package:youtubeclonenow2/auth/provider/user_provider.dart';
 import 'package:youtubeclonenow2/cores/screens/loader.dart';
 import 'package:youtubeclonenow2/features/channel/widgets/edit_setting_dialog.dart';
 import '../../../../cores/screens/error_page.dart';
+import '../../widgets/edit_settins_username_dialog.dart';
 import '../../widgets/setting_field_item.dart';
 import '../repository/edit_fields.dart';
 import 'dart:io';
@@ -98,7 +99,7 @@ class _ChannelSettingsState extends ConsumerState<ChannelSettings> {
               onPressed: () {
                 showDialog(
                   context: context,
-                  builder: (context) => SettingsDialog(
+                  builder: (context) => SettingsUsernameDiallogue(
                     identifier: "New Displayname",
                     onSave: (name) {
                       ref.read(editSettingsProvider).editDisplayName(name);
