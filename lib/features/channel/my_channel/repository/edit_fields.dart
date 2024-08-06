@@ -5,7 +5,6 @@ import 'package:intl/intl.dart';
 
 final editSettingsProvider = Provider<EditSettingFields>((ref) {
   return EditSettingFields(firestore: FirebaseFirestore.instance, auth: FirebaseAuth.instance,);
-  ;
 });
 
 class EditSettingFields{

@@ -5,12 +5,22 @@ import 'package:youtubeclonenow2/auth/provider/user_provider.dart';
 import"package:cached_network_image/cached_network_image.dart";
 import 'package:youtubeclonenow2/cores/screens/error_page.dart';
 import 'package:youtubeclonenow2/cores/screens/loader.dart';
+import 'package:youtubeclonenow2/features/upload/upload_bottom_sheet.dart';
+import 'package:youtubeclonenow2/page_list.dart';
 import 'cores/widgets/image_button.dart';
-class HomePage extends ConsumerWidget {
+import 'features/channel/my_channel/pages/my_channel_screen.dart';
+import 'features/content/bottom_navigation.dart';
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
-  Widget build(BuildContext context,WidgetRef ref) {
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int currentindex=0;
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xffFFFFFF),
       body: SafeArea(
@@ -58,20 +68,38 @@ class HomePage extends ConsumerWidget {
                   return ref.watch(currentUserProvider).when(
                       data: (currentUser)=>Padding(
                         padding: const EdgeInsets.only(right: 10),
-                        child: CircleAvatar(
-                          radius: 14,
-                          backgroundColor: Colors.green,
-                          backgroundImage:CachedNetworkImageProvider(currentUser.profilePic),
-                        ),
+                        child: InkWell(
+                          child: CircleAvatar(
+                            radius: 14,
+                            backgroundColor: Colors.green,
+                            backgroundImage:CachedNetworkImageProvider(currentUser.profilePic),
+                          ),
+                          onTap: () {
+                            Navigator.push(
+                              context, MaterialPageRoute(builder: (context) => MyChannelScreen(),
+                              ),
+                            );
+                          },),
                       ),
                       error: (error ,stackTree)=> const ErrorPage(),
                       loading: ()=>const Loader());
                 })
               ],
             ),
+            Expanded(child: page[currentindex])
           ],
         ),
       ),
+      bottomNavigationBar: BottomNavigation(onPressed: (int index) {
+        if(index!=2){
+          currentindex=index;
+          setState(() {
+          });
+        }
+        else{
+          showModalBottomSheet(context: context , builder: (context)=> CreateBottomSheet());
+        }
+      },),
     );
   }
 }

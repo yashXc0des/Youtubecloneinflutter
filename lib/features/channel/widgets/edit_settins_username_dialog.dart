@@ -1,12 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-final formkey1 = GlobalKey<FormState>();
+
 class SettingsUsernameDiallogue extends ConsumerStatefulWidget {
   final String identifier;
   final Function(String)? onSave;
 
-  const SettingsUsernameDiallogue({super.key, required this.identifier, this.onSave});
+  const SettingsUsernameDiallogue({
+    super.key,
+    required this.identifier,
+    this.onSave,
+  });
 
   @override
   ConsumerState<SettingsUsernameDiallogue> createState() => _SettingsUsernameDiallogueState();
@@ -14,6 +18,7 @@ class SettingsUsernameDiallogue extends ConsumerStatefulWidget {
 
 class _SettingsUsernameDiallogueState extends ConsumerState<SettingsUsernameDiallogue> {
   final TextEditingController usernameController = TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool isValidate = true;
 
   @override
@@ -22,33 +27,19 @@ class _SettingsUsernameDiallogueState extends ConsumerState<SettingsUsernameDial
     super.dispose();
   }
 
-  void validateusername() async {
+  Future<void> validateUsername() async {
     final usersMap = await FirebaseFirestore.instance.collection("users").get();
     final users = usersMap.docs.map((user) => user).toList();
-    String? targetedUsername;
+
+    final username = usernameController.text.trim();
+    bool usernameExists = users.any((user) => user.data()["username"] == username);
 
     setState(() {
-      isValidate = true; // Reset validation state
+      isValidate = !usernameExists;
     });
-
-    for (var user in users) {
-      if (usernameController.text == user.data()["username"]) {
-        targetedUsername = user.data()["username"];
-        setState(() {
-          isValidate = false;
-        });
-        break;
-      }
-    }
-
-    if (targetedUsername == null) {
-      setState(() {
-        isValidate = true;
-      });
-    }
   }
+
   @override
-  final TextEditingController controller = TextEditingController();
   Widget build(BuildContext context) {
     return AlertDialog(
       titlePadding: const EdgeInsets.only(top: 0),
@@ -65,22 +56,20 @@ class _SettingsUsernameDiallogueState extends ConsumerState<SettingsUsernameDial
       content: SizedBox(
         height: 50,
         child: Form(
-          key: formkey1,
+          key: _formKey,
           child: TextFormField(
             onChanged: (value) {
-              validateusername();
+              validateUsername(); // Validate as user types
             },
-            autovalidateMode: AutovalidateMode.always,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             validator: (value) {
               return isValidate ? null : "Username already taken";
             },
-            obscureText: false, // Not a password field
             controller: usernameController,
             decoration: InputDecoration(
               suffixIcon: isValidate
-                  ? Icon(Icons.verified_user,color: Colors.green,)
-                  : Icon(Icons.cancel,color: Colors.red,),
-              //iconColor: isValidate ? Colors.green : Colors.redAccent,
+                  ? const Icon(Icons.verified_user, color: Colors.green)
+                  : const Icon(Icons.cancel, color: Colors.red),
               hintText: "Username",
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(21),
@@ -103,8 +92,7 @@ class _SettingsUsernameDiallogueState extends ConsumerState<SettingsUsernameDial
       actions: [
         TextButton(
           onPressed: () {
-            Navigator.of(context).pop();
-            // Dismiss dialog on cancel
+            Navigator.of(context).pop(); // Dismiss dialog on cancel
           },
           child: const Text(
             "CANCEL",
@@ -113,10 +101,12 @@ class _SettingsUsernameDiallogueState extends ConsumerState<SettingsUsernameDial
         ),
         TextButton(
           onPressed: () {
-            if (widget.onSave != null) {
-              widget.onSave!(controller.text); // Call onSave with the entered text
+            if (_formKey.currentState?.validate() ?? false) {
+              if (widget.onSave != null) {
+                widget.onSave!(usernameController.text.trim()); // Call onSave with the entered text
+              }
+              Navigator.of(context).pop(); // Dismiss dialog after saving
             }
-            Navigator.of(context).pop(); // Dismiss dialog after saving
           },
           child: const Text(
             "SAVE",

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../cores/widgets/image_button.dart';
+import '../pages/channel_settings.dart';
 class buttonspart extends StatelessWidget {
   const buttonspart({super.key});
 
@@ -27,7 +28,8 @@ class buttonspart extends StatelessWidget {
                   child: Center(child: TextButton(onPressed: (){}, child: Text("Manage Videos",style: TextStyle(color: Colors.black,fontSize:16)))),
                 ),
               ),
-              Expanded(child: ImageButton(onPressed: (){}, image: "pen.png", haveColor: true)),
+              Expanded(child: ImageButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>ChannelSettings()));}, image: "pen.png", haveColor: true)
+              ),
               Expanded(child: ImageButton(onPressed: (){}, image: "time-watched.png", haveColor:true)),
             ],
           ),

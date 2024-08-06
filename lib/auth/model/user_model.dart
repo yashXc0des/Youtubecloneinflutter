@@ -36,7 +36,6 @@ class UserModel {
       'type': type,
     };
   }
-
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
       displayName: map['displayName'] as String,
@@ -50,6 +49,8 @@ class UserModel {
       type: map['type'] as String,
     );
   }
+
+
 
   String toJson() => json.encode(toMap());
 

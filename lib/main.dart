@@ -9,6 +9,7 @@ import 'auth/pages/login_page.dart';
 import 'auth/pages/username_page.dart';
 import 'features/channel/my_channel/pages/channel_settings.dart';
 import 'features/channel/my_channel/pages/my_channel_screen.dart';
+import 'features/channel/users_channel/pages/user_channel_page.dart';
 import 'home_page.dart';
 
 void main() async {
@@ -67,7 +68,7 @@ class AuthWidget extends ConsumerWidget {
                   email: user.email ?? '',
                 );
               } else {
-                return ChannelSettings();
+                return HomePage();
               }
             },
           );
