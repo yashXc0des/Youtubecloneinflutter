@@ -10,6 +10,7 @@ import 'auth/pages/username_page.dart';
 import 'features/channel/my_channel/pages/channel_settings.dart';
 import 'features/channel/my_channel/pages/my_channel_screen.dart';
 import 'features/channel/users_channel/pages/user_channel_page.dart';
+import 'features/content/Long_video/video_details.dart';
 import 'home_page.dart';
 
 void main() async {

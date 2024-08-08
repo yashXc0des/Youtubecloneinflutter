@@ -32,14 +32,19 @@ class _ChannelSettingsState extends ConsumerState<ChannelSettings> {
     final File file = File(image.path);
     await _uploadImage(file);
   }
+  Future<void> _pickImageCamera() async {
+    final XFile? image = await _picker.pickImage(source: ImageSource.camera);
+
+    if (image == null) return;
+
+    final File file = File(image.path);
+    await _uploadImage(file);
+  }
 
   Future<void> _uploadImage(File file) async {
     try {
       final userId = FirebaseAuth.instance.currentUser!.uid;
-      final storageRef = FirebaseStorage.instance
-          .ref()
-          .child('profile_pictures')
-          .child('$userId.jpg');
+      final storageRef = FirebaseStorage.instance.ref().child('profile_pictures').child('$userId.jpg');
 
       await storageRef.putFile(file);
 
@@ -83,7 +88,7 @@ class _ChannelSettingsState extends ConsumerState<ChannelSettings> {
                       right: 16,
                       top: 20,
                       child:GestureDetector(
-                        onTap: _pickImage,
+                        onTap: _pickImageCamera,
                         child: Image.asset(
                           "assets/icons/camera.png",
                           color: Colors.white,

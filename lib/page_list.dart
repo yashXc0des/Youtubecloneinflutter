@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-
 List page=[
   const Center(
     child: Text("HOME"),
@@ -13,5 +12,4 @@ List page=[
   ),  const Center(
     child: Text("LOGOUT"),
   ),
-
 ];

@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:youtubeclonenow2/cores/methods.dart';
 
 import '../../cores/widgets/image_item.dart';
 class CreateBottomSheet extends StatelessWidget {
@@ -42,7 +43,9 @@ class CreateBottomSheet extends StatelessWidget {
                 height: 38,
                 child: ImageItem(
                   itemText: "Upload a Video",
-                  itemClicked: () {},
+                  itemClicked: () {
+                    pickVideo(context);
+                  },
                   imageName: "upload.png",
                   haveColor: true,
                 ),
