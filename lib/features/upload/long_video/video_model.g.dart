@@ -7,11 +7,12 @@ part of 'video_model.dart';
 // **************************************************************************
 
 VideoModel _$VideoModelFromJson(Map<String, dynamic> json) => VideoModel(
+      description: json['description'] as String,
       videoUrl: json['videoUrl'] as String,
       thumbnail: json['thumbnail'] as String,
       title: json['title'] as String,
-      datepublished: json['datepublished'] as DateTime,
-      views: json['views'] as int,
+      datepublished: VideoModel._fromJson(json['datepublished'] as Timestamp),
+      views: (json['views'] as num).toInt(),
       videoId: json['videoId'] as String,
       usedId: json['usedId'] as String,
       likes: json['likes'] as List<dynamic>,
@@ -23,7 +24,8 @@ Map<String, dynamic> _$VideoModelToJson(VideoModel instance) =>
       'videoUrl': instance.videoUrl,
       'thumbnail': instance.thumbnail,
       'title': instance.title,
-      'datepublished': instance.datepublished,
+      'description': instance.description,
+      'datepublished': VideoModel._toJson(instance.datepublished),
       'views': instance.views,
       'videoId': instance.videoId,
       'usedId': instance.usedId,

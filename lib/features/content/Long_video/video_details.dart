@@ -9,8 +9,8 @@ import 'package:youtubeclonenow2/features/upload/long_video/video_repository.dar
 import 'package:youtubeclonenow2/utils/custom_textfield.dart';
 
 class UploadVideoDetailsPage extends ConsumerStatefulWidget {
-  //final File video;
-   UploadVideoDetailsPage( {super.key} );
+  final File video;
+  UploadVideoDetailsPage({Key? key, required this.video}) : super(key: key);
 
   @override
   ConsumerState<UploadVideoDetailsPage> createState() => _UploadVideoDetailsPageState();
@@ -90,22 +90,35 @@ class _UploadVideoDetailsPageState extends ConsumerState<UploadVideoDetailsPage>
                   ),
                 )
                     : const SizedBox(height: 100),
-                TextButton(
-                  onPressed: () async {
-                    if (image != null) {
-                      String thumbnail = await putFileInStorage(image!, randomnumner, "image");
-                      await ref.watch(longvideoProvider).uploadvideoToFirestore(
-                        videoUrl: video, // Ensure path is correct
-                        thumbnail: thumbnail,
-                        title: titleController.text,
-                        datepublished: DateTime.now(),
-                        videoId: videoid,
-                        usedId: FirebaseAuth.instance.currentUser!.uid,
-                      );
-                    }
-                  },
-                  child: const Text("PUBLISH"),
-                ),
+          TextButton(
+            onPressed: () async {
+              if (image != null) {
+                String? thumbnail = await putFileInStorage(image!, randomnumner, "image");
+                if (thumbnail != null) {
+                  String? videoUrl = await putFileInStorage(widget.video, videoid, "video");
+                  if (videoUrl != null) {
+                    await ref.watch(longvideoProvider).uploadvideoToFirestore(
+                      videoUrl: videoUrl,
+                      thumbnail: thumbnail,
+                      title: titleController.text,
+                      description: descriptionController.text, // Add description
+                      datepublished: DateTime.now(),
+                      videoId: videoid,
+                      usedId: FirebaseAuth.instance.currentUser!.uid,
+                    );
+                  } else {
+                    showErrorSnackBar('Error uploading video', context);
+                  }
+                } else {
+                  showErrorSnackBar('Error uploading thumbnail', context);
+                }
+              } else {
+                showErrorSnackBar('Thumbnail is required', context);
+              }
+            },
+            child: const Text("PUBLISH"),
+          )
+
               ],
             ),
           ),

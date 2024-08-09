@@ -8,6 +8,7 @@ class VideoModel {
   final String videoUrl;
   final String thumbnail;
   final String title;
+  final String description;
   @JsonKey(fromJson: _fromJson, toJson: _toJson)
   final DateTime datepublished;
   final int views;
@@ -16,7 +17,8 @@ class VideoModel {
   final List<dynamic> likes;
   final String type;
 
-  VideoModel({
+  VideoModel( {
+    required this.description,
     required this.videoUrl,
     required this.thumbnail,
     required this.title,

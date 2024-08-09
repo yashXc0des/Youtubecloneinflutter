@@ -16,13 +16,19 @@ void showErrorSnackBar(String message, BuildContext context) =>
       ),
     );
 
-Future<String> putFileInStorage(File file, String number, String filetype) async {
-  final ref = FirebaseStorage.instance.ref().child("$filetype/$number");
-  final upload = ref.putFile(file);
-  final snapshot = await upload;
-  String downloadURL = await snapshot.ref.getDownloadURL();
-  return downloadURL;
+Future<String?> putFileInStorage(File file, String number, String filetype) async {
+  try {
+    final ref = FirebaseStorage.instance.ref().child("$filetype/$number");
+    final upload = ref.putFile(file);
+    final snapshot = await upload.whenComplete(() {});
+    String downloadURL = await snapshot.ref.getDownloadURL();
+    return downloadURL;
+  } catch (e) {
+    print('Error uploading file: $e');
+    return null;
+  }
 }
+
 
 Future<File?> pickImage() async {
   XFile? file = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -34,11 +40,12 @@ Future<File?> pickVideo(BuildContext context) async {
     File video = File(file.path);
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => UploadVideoDetailsPage(video: video)), // Correctly passing the video file
+      MaterialPageRoute(builder: (context) => UploadVideoDetailsPage(video: video)),
     );
     return video;
   }
   return null;
 }
+
 
 
