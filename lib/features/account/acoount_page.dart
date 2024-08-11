@@ -11,9 +11,6 @@ class Account_Page extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            CircleAvatar(
-              //backgroundImage: CachedNetworkImageProvider(),
-            ),
             Padding(
               padding: EdgeInsets.only(top: 15),
               child: Items(),
