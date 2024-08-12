@@ -8,7 +8,7 @@ import 'package:youtubeclonenow2/cores/screens/loader.dart';
 import 'package:youtubeclonenow2/features/upload/upload_bottom_sheet.dart';
 import 'package:youtubeclonenow2/page_list.dart';
 import 'cores/widgets/image_button.dart';
-import 'features/account/acoount_page.dart';
+import 'features/account/account_page.dart';
 import 'features/content/bottom_navigation.dart';
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
