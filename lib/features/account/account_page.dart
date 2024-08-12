@@ -1,5 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:youtubeclonenow2/features/account/items.dart';
 class Account_Page extends StatelessWidget {
@@ -7,15 +5,16 @@ class Account_Page extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: SafeArea(
         child: Column(
           children: [
 
-            Padding(
+            const Padding(
               padding: EdgeInsets.only(top: 15),
               child: Items(),
-            )
+            ),
+            Image.asset("assets/images/go_back_final.png");
           ],
         ),
       ),
