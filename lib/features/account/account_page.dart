@@ -14,7 +14,7 @@ class Account_Page extends StatelessWidget {
               padding: EdgeInsets.only(top: 15),
               child: Items(),
             ),
-            Image.asset("assets/images/go_back_final.png");
+            Image.asset("assets/images/go_back_final.png")
           ],
         ),
       ),
