@@ -1,4 +1,3 @@
-// ignore_for_file: invalid_use_of_visible_for_testing_member
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:youtubeclonenow2/auth/provider/user_provider.dart';

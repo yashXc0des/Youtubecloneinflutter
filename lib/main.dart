@@ -4,13 +4,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:youtubeclonenow2/cores/firebase_options.dart';
-
 import 'auth/pages/login_page.dart';
 import 'auth/pages/username_page.dart';
-import 'features/channel/my_channel/pages/channel_settings.dart';
-import 'features/channel/my_channel/pages/my_channel_screen.dart';
-import 'features/channel/users_channel/pages/user_channel_page.dart';
-import 'features/content/Long_video/video_details.dart';
 import 'home_page.dart';
 
 void main() async {
@@ -47,7 +42,7 @@ class AuthWidget extends ConsumerWidget {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return CircularProgressIndicator();
         } else if (snapshot.hasError) {
-          return Center(child: Text('Something went wrong!'));
+          return const Center(child: Text('Something went wrong!'));
         } else if (!snapshot.hasData) {
           return LoginPage();
         } else {

@@ -42,7 +42,7 @@ class UserModel {
       username: map['username'] as String,
       email: map['email'] as String,
       profilePic: map['profilePic'] as String,
-      subscription: List<String>.from(map['subscription'] ?? []),
+      subscription: List<String>.from(map['subscription'] ),
       videos: map['videos'] as int,
       userId: map['userId'] as String,
       description: map['description'] as String,
