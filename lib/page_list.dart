@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'package:youtubeclonenow2/features/content/Long_video/long_video_screen.dart';
 List page=[
-  const Center(
-    child: Text("HOME"),
-  ),
+ const LongVideoScreen(),
   const Center(
     child: Text("SHORTS"),
   ),  const Center(

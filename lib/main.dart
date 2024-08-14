@@ -65,7 +65,7 @@ class AuthWidget extends ConsumerWidget {
                   email: user.email ?? '',
                 );
               } else {
-                return Post();
+                return HomePage();
               }
             },
           );
