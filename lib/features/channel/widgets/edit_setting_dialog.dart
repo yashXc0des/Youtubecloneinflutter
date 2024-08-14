@@ -35,10 +35,20 @@ class _SettingsDialogState extends State<SettingsDialog> {
         height: 50,
         child: TextField(
           controller: controller,
-          decoration: const InputDecoration(
-            border: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: Colors.blue,
+          decoration:InputDecoration(
+            iconColor: Colors.green,
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(21),
+              borderSide: const BorderSide(
+                  color: Colors.blue,
+                  width: 4
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(21),
+              borderSide: const BorderSide(
+                  color: Colors.green,
+                  width: 4
               ),
             ),
           ),

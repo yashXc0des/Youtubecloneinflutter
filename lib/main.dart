@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:youtubeclonenow2/cores/firebase_options.dart';
 import 'auth/pages/login_page.dart';
 import 'auth/pages/username_page.dart';
+import 'features/content/Long_video/parts/post.dart';
 import 'home_page.dart';
 
 void main() async {
@@ -64,7 +65,7 @@ class AuthWidget extends ConsumerWidget {
                   email: user.email ?? '',
                 );
               } else {
-                return HomePage();
+                return Post();
               }
             },
           );

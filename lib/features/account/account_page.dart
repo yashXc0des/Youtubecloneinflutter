@@ -31,6 +31,21 @@ class Account_Page extends StatelessWidget {
                     loading: ()=>const Loader());
               }),
             ),
+            Consumer(builder: (context , ref ,child){
+              return ref.watch(currentUserProvider).when(
+                  data: (currentUser)=>Padding(
+                    padding: const EdgeInsets.only(right: 10),
+                    child: Text(currentUser.displayName,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),),
+                  ),
+                  error: (error ,stackTree)=> const ErrorPage(),
+                  loading: ()=>const Loader());
+            }),
+            Consumer(builder: (context,ref,child){
+              return ref.watch(currentUserProvider).when(
+                  data:(currentUser)=>Text(currentUser.username),
+                  error: (error ,stackTree)=> const ErrorPage(),
+                  loading: ()=>const Loader());
+            }),
 
             const Padding(
               padding: EdgeInsets.only(top: 15),

@@ -104,7 +104,7 @@ class _ChannelSettingsState extends ConsumerState<ChannelSettings> {
               onPressed: () {
                 showDialog(
                   context: context,
-                  builder: (context) => SettingsUsernameDiallogue(
+                  builder: (context) => SettingsDialog(
                     identifier: "New Displayname",
                     onSave: (name) {
                       ref.read(editSettingsProvider).editDisplayName(name);
@@ -123,7 +123,7 @@ class _ChannelSettingsState extends ConsumerState<ChannelSettings> {
                   onPressed: () {
                     showDialog(
                       context: context,
-                      builder: (context) => SettingsDialog(
+                      builder: (context) => SettingsUsernameDiallogue(
                         identifier: "New Username",
                         onSave: (username) {
                           ref.read(editSettingsProvider).editUserName(username);

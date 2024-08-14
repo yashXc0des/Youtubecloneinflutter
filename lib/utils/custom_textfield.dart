@@ -14,7 +14,7 @@
       maxLength: length ??20,
       //  controller
       decoration:InputDecoration(
-          suffixIcon: issuffixiconpresent ? Suffixicon : null,
+        suffixIcon: issuffixiconpresent ? Suffixicon : null,
           prefixIcon: isprefixiconpresent ? Prefixicon :null,
         iconColor: Colors.green,
         hintText: hinttext,                    // hint text
