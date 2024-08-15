@@ -43,8 +43,22 @@ class UserDataService {
     return UserModel.fromMap(currentUserMap.data()!);
   }
 
+  Future<UserModel> fetchAnyUserData(String userId) async {
+    final userMap = await firestore.collection("users").doc(userId).get();
+    return UserModel.fromMap(userMap.data()!);
+  }
+
   Stream<UserModel> userStream() {
     return firestore.collection('users').doc(auth.currentUser!.uid).snapshots().map((snapshot) {
+      if (!snapshot.exists) {
+        throw Exception("User not found");
+      }
+      return UserModel.fromMap(snapshot.data()!);
+    });
+  }
+
+  Stream<UserModel> userStreamById(String userId) {
+    return firestore.collection('users').doc(userId).snapshots().map((snapshot) {
       if (!snapshot.exists) {
         throw Exception("User not found");
       }

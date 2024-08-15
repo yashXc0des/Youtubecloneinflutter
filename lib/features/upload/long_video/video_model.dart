@@ -38,4 +38,8 @@ class VideoModel {
 
   static DateTime _fromJson(Timestamp timestamp) => timestamp.toDate();
   static Timestamp _toJson(DateTime date) => Timestamp.fromDate(date);
+  factory VideoModel.fromSnapshot(DocumentSnapshot snapshot) {
+    final data = snapshot.data() as Map<String, dynamic>;
+    return VideoModel.fromJson(data);
+  }
 }
