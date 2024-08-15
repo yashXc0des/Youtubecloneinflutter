@@ -147,7 +147,7 @@ class _VideoState extends ConsumerState<Video> {
                       ),
                       Positioned(
                         right: 45,
-                        top: 79,
+                        top: 78,
                         child: GestureDetector(
                           onTap: goForward,
                           child: SizedBox(
