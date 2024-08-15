@@ -1,15 +1,30 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:video_player/video_player.dart';
 
 import '../../../../cores/colors.dart';
 import '../../../../cores/widgets/flat_button.dart';
 import '../widgets/video_externel_buttons.dart';
-class Video extends StatelessWidget {
+class Video extends StatefulWidget {
   const Video({Key? key}) : super(key: key);
 
   @override
+  State<Video> createState() => _VideoState();
+}
+
+class _VideoState extends State<Video> {
+  VideoPlayerController? _controller;
   @override
+  void initState() {
+    super.initState();
+    _controller = VideoPlayerController.networkUrl(Uri.parse(
+        'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4'))
+      ..initialize().then((_) {
+        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
+        setState(() {});
+      });
+  }
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -21,6 +36,9 @@ class Video extends StatelessWidget {
             onTap: () {},
             child: Stack(
               children: [
+                AspectRatio(aspectRatio: _controller!.value.aspectRatio,
+
+                child: VideoPlayer(_controller!)),
                 Positioned(
                   left: 182,
                   top: 87,

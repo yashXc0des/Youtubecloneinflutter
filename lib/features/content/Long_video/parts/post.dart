@@ -1,17 +1,44 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:youtubeclonenow2/auth/model/user_model.dart';
+import 'package:youtubeclonenow2/auth/provider/user_provider.dart';
+import 'package:youtubeclonenow2/features/content/Long_video/parts/video.dart';
+import 'package:youtubeclonenow2/features/upload/long_video/video_model.dart';
 
-class Post extends StatelessWidget {
-  const Post({super.key});
+class Post extends ConsumerWidget {
+  final VideoModel video;
+  const Post({Key? key, required this.video}):super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context,WidgetRef ref) {
+    final AsyncValue<UserModel> usermodel =ref.watch(anyUserDataProvider(video.usedId));
+    final user =usermodel.whenData((user)=> user);
     return Container(
       child: Column(
         children: [
-          CachedNetworkImage(
-            imageUrl:
-            "https://i0.wp.com/eckyledavidsonneedforspeed.wordpress.com/wp-content/uploads/2017/10/nfs-most-wanted-bmw-wallpaperswallpapers-nfs-mostwanted-gtr-bmw-m-most-wanted-800x600-47422-jfevu13d.jpg?w=2500&h=&ssl=1",
+          InkWell(
+            onTap: (){
+              Navigator.push(context,MaterialPageRoute(builder: (context)=>Video()));
+            },
+            child: Container(
+              height: 200,
+              color: Colors.black87,  // Set the background color to grey
+              child: Stack(
+                fit: StackFit.loose,
+                alignment: Alignment.center,
+                children: [
+                  // The grey background
+                  CachedNetworkImage(
+                    imageUrl: video.thumbnail,
+                    ),
+                  // The image with BoxFit.cover to fill the container as much as possible
+                  Container(
+                    color: Colors.black26,
+                  ),
+                ],
+              ),
+            ),
           ),
           Padding(
             padding: EdgeInsets.all(8.0),
@@ -20,41 +47,53 @@ class Post extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CircleAvatar(
-                  backgroundColor: Colors.green,
-                  radius: 20,
+                    child: user.when(
+                      data: (userData) {
+                        return ClipOval(
+                          child: CachedNetworkImage(
+                            imageUrl: userData.profilePic, // Access the profilePic directly from userData
+                          ),
+                        );
+                      },
+                      loading: () => CircularProgressIndicator(),
+                      error: (error, stack) => Text("Error: $error"),
+                    )
+
                 ),
                 SizedBox(width: 5), // Adding space between CircleAvatar and Column
-                const Expanded(
+                Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        "TITLE",
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+                        video.title,
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                       ),
                       SizedBox(height: 4),
-                      Row(
-                        children: [
-                          Text(
-                            "CHANNEL NAME",
-                            style: TextStyle(color: Colors.blueGrey),
-                          ),
-                          Spacer(), // Spacer to push the remaining text to the right
-                          Text(
-                            "0",
-                            style: TextStyle(color: Colors.blueGrey),
-                          ),
-                          SizedBox(width: 8), // Adding space between elements
-                          Text(
-                            "DAYS SINCE PUBLISHED",
-                            style: TextStyle(color: Colors.blueGrey),
-                          ),
-                        ],
+                      Container(
+                        width: 240,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              user.value!.displayName,
+                              style: TextStyle(color: Colors.blueGrey,fontSize:10),
+                            ), // Spacer to push the remaining text to the right
+                            Text(
+                                video.views == 0 ? "NO VIEWS" : "${video.views.toString()} views",
+                              style: TextStyle(color: Colors.blueGrey,fontSize:10),
+                            ), // Adding space between elements
+                            Text(
+                              video.datepublished.toString() ,
+                              style: TextStyle(color: Colors.blueGrey,fontSize:10),
+                            ),
+                          ],
+                        ),
                       )
                     ],
                   ),
                 ),
-                const Spacer(),
                 IconButton(
                   onPressed: () {
                     // Add your desired functionality here

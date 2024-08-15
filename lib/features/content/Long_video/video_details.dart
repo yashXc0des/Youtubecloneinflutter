@@ -8,6 +8,9 @@ import 'package:youtubeclonenow2/cores/methods.dart';
 import 'package:youtubeclonenow2/features/upload/long_video/video_repository.dart';
 import 'package:youtubeclonenow2/utils/custom_textfield.dart';
 
+import '../../../home_page.dart';
+import 'long_video_screen.dart';
+
 class UploadVideoDetailsPage extends ConsumerStatefulWidget {
   final File video;
   UploadVideoDetailsPage({Key? key, required this.video}) : super(key: key);
@@ -115,6 +118,7 @@ class _UploadVideoDetailsPageState extends ConsumerState<UploadVideoDetailsPage>
               } else {
                 showErrorSnackBar('Thumbnail is required', context);
               }
+              Navigator.push(context,MaterialPageRoute(builder: (context)=>HomePage()));
             },
             child: const Text("PUBLISH"),
           )
